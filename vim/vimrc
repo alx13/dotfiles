@@ -1,0 +1,313 @@
+let $TMPDIR="/tmp"
+
+"Выключаем совместимость с vi
+set nocompatible
+"чистим
+syntax off
+filetype on
+filetype off
+autocmd!
+
+call plug#begin()
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'sjl/gundo.vim'
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
+
+Plug 'tmhedberg/matchit'
+Plug 'junegunn/vim-easy-align'
+Plug 'easymotion/vim-easymotion'
+
+Plug 'kshenoy/vim-signature'
+Plug 'Yggdroot/indentLine'
+Plug 'jnurmine/Zenburn'
+
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+
+Plug 'Shougo/neocomplete.vim'
+
+Plug 'w0rp/ale'
+" Plug 'scrooloose/syntastic'
+" Plug 'mtscout6/syntastic-local-eslint.vim'
+" Plug 'pmsorhaindo/syntastic-local-eslint.vim'
+
+" LANGUAGES & SYNTAX
+" Plug 'vim-scripts/SyntaxRange'
+" Plug 'avakhov/vim-yaml'
+" Plug 'rodjek/vim-puppet'
+" Plug 'tpope/vim-markdown'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'briancollins/vim-jst'
+Plug 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+Plug 'groenewege/vim-less'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'kelan/gyp.vim'
+Plug 'mxw/vim-jsx'
+" Plug 'pangloss/vim-javascript'
+Plug 'plasticboy/vim-markdown'
+Plug 'saltstack/salt-vim'
+Plug 'stephpy/vim-yaml'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'fatih/vim-go'
+
+Plug 'mattn/emmet-vim'
+Plug 'editorconfig/editorconfig-vim'
+call plug#end()            " required
+
+filetype plugin indent on    " required
+
+" Enable mouse use in all modes
+set mouse=a
+
+"long history
+set history=1000
+"no BEEEP
+set visualbell
+set autoread
+"копируем в буфер
+set clipboard=unnamed
+
+" gundo
+nnoremap <leader>u    :GundoToggle<CR>
+
+"Сплиты
+nnoremap <leader>sw<left>  :topleft  vnew<CR>
+nnoremap <leader>sw<right> :botright vnew<CR>
+nnoremap <leader>sw<up>    :topleft  new<CR>
+nnoremap <leader>sw<down>  :botright new<CR>
+
+nnoremap <leader>s<left>   :leftabove  vnew<CR>
+nnoremap <leader>s<right>  :rightbelow vnew<CR>
+nnoremap <leader>s<up>     :leftabove  new<CR>
+nnoremap <leader>s<down>   :rightbelow new<CR>
+
+
+"показываем команды
+set showcmd
+"показываем номера строк
+set nu
+"инкрементный поиск
+set incsearch
+"подсветка поиска
+set hlsearch
+"переключить подсветку по \+Enter
+nnoremap <silent> <leader><CR> :noh<CR>
+"умный поиск
+set ignorecase
+set smartcase
+
+"кодировка терминала
+set termencoding=utf-8
+
+"авто отступы
+set autoindent
+set smartindent
+
+"табуляция в 4 пробела, замена <TAB> пробелом
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+
+"каталог для свопов и бекапа
+set directory=~/.vimtemp/swap//
+set viewdir=~/.vimtemp/view//
+set undodir=~/.vimtemp/undodir//
+set backupdir=~/.vimtemp/backup//
+
+"фолдинг
+set foldmethod=manual   "fold based on indent
+set foldcolumn=3
+set foldnestmax=3       "deepest fold is 3 levels
+set nofoldenable        "dont fold by default
+
+"показываем невидимые символы
+" Shortcut to rapidly toggle `set list`
+set list
+nnoremap <leader>l :set list!<CR>
+ 
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¶,nbsp:¬
+
+"включаем цветовую схему zenburn
+if has('gui_running')
+  colorscheme zenburn
+  set background=dark
+else
+  set t_Co=256
+  colorscheme zenburn
+endif
+
+"ale
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '>>'
+
+let g:ale_linters = {'go': ['gometalinter']}
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf('%dW %dE', all_non_errors, all_errors)
+endfunction
+
+
+set laststatus=2
+if has("statusline")
+  "сбрасываем в начале
+  set statusline=%<
+  "флаг хелпа
+  set statusline+=%h
+  "флаг модификации файла
+  set statusline+=%m
+  "фалы только для чтения
+  set statusline+=%#error#%r%*\ 
+  "имя файла
+  set statusline+=\ %f\ 
+  "тип файла
+  set statusline+=%y
+  "формат файла
+  set statusline+=[%{&ff}]
+  "кодировка и наличие BOM
+  set statusline+=%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}
+  " set statusline+=\ %{SyntasticStatuslineFlag()}
+  "fugitive
+  set statusline+=%{fugitive#statusline()}
+  "дальше привязка к правому краю
+  set statusline+=%=
+  set statusline+=%{LinterStatus()}\ \|\ 
+  "значение символа под курсором
+  set statusline+=Dec:%04.b\/Hex:0x%04.B\ \|\ %l/%L,%c%V\ \|\ 
+  "позиция курсора и проценты
+  set statusline+=%P\ 
+endif
+"подсветка синтаксиса
+syntax on
+
+"format options
+set fo+=cr
+
+"Отступы в визуальных блоках
+vnoremap < <gv
+vnoremap > >gv
+
+"для репит плагина 
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+"русский с йо
+set spelllang=ru_yo,en_us
+"раскладка клавиатуры
+"set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕHГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
+
+" меняем подсветку диффов
+highlight DiffAdd     ctermfg=108 guifg=#7f9f7f guibg=#333333
+highlight DiffChange  ctermfg=12  guifg=#8c8cbc guibg=#333333
+highlight DiffDelete  ctermfg=174 guifg=#cc9393 guibg=#333333
+
+" открываем зипы
+au BufReadCmd   *.epub      call zip#Browse(expand("<amatch>"))
+au BufReadCmd   *.qb        call zip#Browse(expand("<amatch>"))
+au BufReadCmd   *.odt       call zip#Browse(expand("<amatch>"))
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+noremap <silent> <leader>n :NERDTreeToggle<CR> <C-w>=
+noremap <silent> <leader>f :NERDTreeFind<CR> <C-w>=
+
+" function! JinjaTempate()
+"     call SyntaxRange#Include('{{', '}}', 'jinja')
+"     call SyntaxRange#Include('{%', '%}', 'jinja')
+" endfunction
+" nnoremap <silent><leader>j :call JinjaTempate()<CR>
+
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = { 'default' : '' }
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><Down> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr><Up> pumvisible() ? "\<C-p>" : "\<Up>"
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+" let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'jruby']
+" let g:syntastic_lua_checkers = ['luacheck', 'luac']
+" let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+
+nnoremap <leader>i :IndentLinesToggle<CR>
+let g:indentLine_enabled = 0
+let g:indentLine_faster = 1
+let g:indentLine_setConceal = 0
+
+" different indents
+autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType lua setlocal expandtab shiftwidth=2 tabstop=2
+
+autocmd FileType go setlocal listchars=tab:\ \ ,eol:¶,nbsp:¬
+autocmd FileType go setlocal shiftwidth=2
+autocmd FileType go setlocal tabstop=2
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+
+"sort
+vnoremap <leader>s :sort<CR>
+
+set shell=zsh

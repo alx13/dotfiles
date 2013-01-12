@@ -1,0 +1,39 @@
+---
+plugins:
+  - lodash-fp
+extends:
+  - airbnb-base
+  - plugin:lodash-fp/recommended
+env:
+  node: true
+
+parserOptions:
+  sourceType: "script"
+
+rules:
+  indent: [ "warn", 4, { "SwitchCase": 1 } ]
+  linebreak-style: [ "error", "unix" ]
+  quotes: [ "warn", "single" ]
+  semi: [ "warn", "always" ]
+  no-var: [ "off" ]
+  quote-props: ["warn", "consistent-as-needed"]
+  prefer-arrow-callback: "off" 
+  object-shorthand: "off" 
+  no-console: "off" 
+  func-names: "off"
+  comma-dangle: 
+    - "error" 
+    - "functions": "never"
+      "arrays": "always-multiline"
+      "objects": "always-multiline"
+      "imports": "always-multiline"
+      "exports": "always-multiline"
+  dot-notation: "off"
+  import/no-extraneous-dependencies: ["error", { "devDependencies": true }]
+
+  # lodash/fp
+  lodash-fp/use-fp: "off"
+  lodash-fp/consistent-name: "off"
+  lodash-fp/no-chain: "off"
+  lodash-fp/no-extraneous-function-wrapping: "off"
+

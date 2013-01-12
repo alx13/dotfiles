@@ -1,0 +1,29 @@
+[user]
+    name = alx13
+    email = alex.alx13@gmail.com
+[alias]
+    lg = log --color --branches --remotes --tags --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    su = submodule update --init --recursive
+    pt = push --follow-tags
+    co = checkout
+    dl = "!git ll -1"
+    dlc = difftool --cached HEAD^
+    tg = "!f () { tag=$1; git tag -a $tag -m '$tag'; }; f"
+
+[credential]
+    helper = osxkeychain
+[core]
+    excludesfile = ~/.gitignore
+    editor = vim
+[push]
+    default = simple
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

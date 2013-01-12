@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+NODE_DIR=${DIR}/../node
+
+cp ${NODE_DIR}/eslintrc.yml ./.eslintrc.yml
+cp ${NODE_DIR}/test/eslintrc.yml ./test/.eslintrc.yml
+cp ${NODE_DIR}/gitignore ./.gitignore
+cp ${NODE_DIR}/npmrc ./.npmrc

@@ -1,10 +1,12 @@
 [ -z "$PS1" ] && return
 
-# source ~/.zshenv
-# vi mode
 set editing-mode vi
 bindkey -v
 
 for file in ${ZDOTDIR}/{completion,plugins,misc,aliases,prompt}/*.zsh; do
     source $file
 done
+
+if [ -f "${HOME}/.zshrc" ] && [ -s "${HOME}/.zshrc" ]; then
+    source "${HOME}/.zshrc"
+fi

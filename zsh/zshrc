@@ -1,7 +1,23 @@
 [ -z "$PS1" ] && return
 
+
 set editing-mode vi
 bindkey -v
+
+# anaconda
+# if [ -d "$HOME/anaconda/bin" ]; then
+#     export PATH="$PATH:$HOME/anaconda/bin"
+# fi
+
+# rust
+# if [ -d "$HOME/.cargo/bin" ]; then
+#     export PATH="$HOME/.cargo/bin:$PATH"
+# fi
+
+# google cloud
+if [ -s "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
+    source "$HOME/google-cloud-sdk/path.zsh.inc"
+fi
 
 for file in ${ZDOTDIR}/{completion,plugins,misc,aliases,prompt}/*.zsh; do
     source $file

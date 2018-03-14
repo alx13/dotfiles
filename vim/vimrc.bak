@@ -11,6 +11,7 @@ filetype on
 filetype off
 autocmd!
 
+
 " Enable mouse use in all modes
 set mouse=a
 
@@ -55,9 +56,9 @@ set smartcase
 set termencoding=utf-8
 
 "авто отступы
-set cindent
+" set cindent
 set autoindent
-set smartindent
+" set smartindent
 set breakindent
 set breakindentopt=shift:4,sbr
 
@@ -107,7 +108,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'kshenoy/vim-signature'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'jnurmine/Zenburn'
 
 Plug 'tpope/vim-abolish'
@@ -117,45 +118,36 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 
+Plug 'Shougo/neocomplete.vim'
 Plug 'will133/vim-dirdiff'
 
 Plug 'w0rp/ale'
-Plug 'mattn/emmet-vim'
-Plug 'editorconfig/editorconfig-vim'
 
-Plug 'lifepillar/vim-mucomplete'
+" LANGUAGES & SYNTAX
+" Plug 'vim-scripts/SyntaxRange'
+" Plug 'Glench/Vim-Jinja2-Syntax'
 
+Plug 'briancollins/vim-jst', { 'for': ['jst', 'ejs'] }
 Plug 'docker/docker', { 'rtp': '/contrib/syntax/vim/', 'for': ['dockerfile'] }
-
 Plug 'groenewege/vim-less', { 'for': ['less'] }
-
+" Plug 'jelera/vim-javascript-syntax'
+Plug 'kelan/gyp.vim', { 'for': ['gyp'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx'] }
 Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
-
 Plug 'saltstack/salt-vim', { 'for': ['salt'] }
-
 Plug 'stephpy/vim-yaml', { 'for': ['yaml'] }
-
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 Plug 'cespare/vim-toml', { 'for': ['toml'] }
-
 Plug 'fatih/vim-go', { 'for': ['go'] }
 
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-
+Plug 'mhartington/vim-typings', { 'for': 'typescript' }
+" Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-" Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
-Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
-" Plug 'Quramy/vim-dtsm', { 'for': 'typescript' }
 
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/yajs.vim', { 'for': ['javascript'] }
-Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx'] }
-Plug 'kelan/gyp.vim', { 'for': ['gyp'] }
-Plug 'briancollins/vim-jst', { 'for': ['jst', 'ejs'] }
-
-Plug 'b4b4r07/vim-hcl'
-
+Plug 'mattn/emmet-vim'
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()            " required
 
 
@@ -176,8 +168,6 @@ let g:ale_sign_warning = '>>'
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 0
 let g:ale_open_list = 0
-
-noremap <silent> <leader>d :ALEDetail<CR>
 
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
@@ -238,55 +228,76 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 noremap <silent> <leader>n :NERDTreeToggle<CR> <C-w>=
 noremap <silent> <leader>f :NERDTreeFind<CR> <C-w>=
 
-" Enable omni completion.
-set showmode
-set shortmess+=c
-set completeopt=menu
-set completeopt+=menuone
-set completeopt+=longest
-set completeopt+=preview
-set completeopt+=noinsert
-set completeopt+=noselect
+" function! JinjaTempate()
+"     call SyntaxRange#Include('{{', '}}', 'jinja')
+"     call SyntaxRange#Include('{%', '%}', 'jinja')
+" endfunction
+" nnoremap <silent><leader>j :call JinjaTempate()<CR>
 
-set omnifunc=syntaxcomplete#Complete
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = { 'default' : '' }
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><Down> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr><Up> pumvisible() ? "\<C-p>" : "\<Up>"
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType typescript set omnifunc=tsuquyomi#complete
 
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
 
-" inoremap <expr> <Tab> <plug>(MUcompleteCycFwd)
-" inoremap <expr><Tab>  pumvisible() ? "\<C-j>" : "\<Tab>"
-" inoremap <expr><S-Tab>  pumvisible() ? "\<C-h>" : "\<S-Tab>"
-
-let g:mucomplete#cycle_all = 1
-let g:mucomplete#cycle_with_trigger = 1
-let g:mucomplete#always_use_completeopt = 1
-let g:mucomplete#enable_auto_at_startup = 1
-let g:mucomplete#buffer_relative_paths = 1
-
-let g:mucomplete#chains = {}
-let g:mucomplete#chains.default = ['omni', 'incl']
-let g:mucomplete#chains.typescript = ['omni', 'incl', 'path']
-
-inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-nnoremap <leader>i :IndentLinesToggle<CR>
-let g:indentLine_enabled = 0
-let g:indentLine_faster = 1
-let g:indentLine_setConceal = 0
+" nnoremap <leader>i :IndentLinesToggle<CR>
+" let g:indentLine_enabled = 0
+" let g:indentLine_faster = 1
+" let g:indentLine_setConceal = 0
 
 " different indents
-autocmd FileType typescript setlocal indentkeys+=0
+" autocmd FileType typescript setlocal indentkeys+=0
+" autocmd FileType typescript setlocal nocindent
+" autocmd FileType javascript setlocal nocindent
 
 " typescript
 let g:tsuquyomi_disable_quickfix = 1
-
-autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+" let g:typescript_indent_disable = 0
+" let g:js_indent_typescript = 0
 
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType lua setlocal expandtab shiftwidth=2 tabstop=2

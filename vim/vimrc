@@ -120,6 +120,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'will133/vim-dirdiff'
 
 Plug 'w0rp/ale'
+" Plug 'vim-syntastic/syntastic'
+" Plug 'alessioalex/syntastic-local-tslint.vim'
+" Plug 'mtscout6/syntastic-local-eslint.vim'
 Plug 'mattn/emmet-vim'
 Plug 'editorconfig/editorconfig-vim'
 
@@ -143,8 +146,8 @@ Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-" Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
+" Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
 " Plug 'Quramy/vim-dtsm', { 'for': 'typescript' }
 
@@ -155,6 +158,9 @@ Plug 'kelan/gyp.vim', { 'for': ['gyp'] }
 Plug 'briancollins/vim-jst', { 'for': ['jst', 'ejs'] }
 
 Plug 'b4b4r07/vim-hcl'
+
+Plug 'lifepillar/vim-cheat40'
+Plug 'lifepillar/pgsql.vim'
 
 call plug#end()            " required
 
@@ -177,8 +183,13 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 0
 let g:ale_open_list = 0
 
-noremap <silent> <leader>d :ALEDetail<CR>
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_typescript_checkers = ['tsuquyomi', 'tslint']
 
+noremap <silent> <leader>d :ALEDetail<CR>
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
     let l:all_errors = l:counts.error + l:counts.style_error
@@ -212,6 +223,7 @@ if has("statusline")
   "дальше привязка к правому краю
   set statusline+=%=
   set statusline+=%{LinterStatus()}\ \|\ 
+  " set statusline+=%{SyntasticStatuslineFlag()}
   "значение символа под курсором
   set statusline+=Dec:%04.b\/Hex:0x%04.B\ \|\ %l/%L,%c%V\ \|\ 
   "позиция курсора и проценты
@@ -240,10 +252,10 @@ noremap <silent> <leader>f :NERDTreeFind<CR> <C-w>=
 
 " Enable omni completion.
 set showmode
-set shortmess+=c
+set shortmess+=cI
 set completeopt=menu
 set completeopt+=menuone
-set completeopt+=longest
+" set completeopt+=longest
 set completeopt+=preview
 set completeopt+=noinsert
 set completeopt+=noselect
@@ -268,7 +280,7 @@ let g:mucomplete#enable_auto_at_startup = 1
 let g:mucomplete#buffer_relative_paths = 1
 
 let g:mucomplete#chains = {}
-let g:mucomplete#chains.default = ['omni', 'incl']
+let g:mucomplete#chains.default = ['omni', 'incl', 'path']
 let g:mucomplete#chains.typescript = ['omni', 'incl', 'path']
 
 inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
@@ -306,6 +318,7 @@ let g:go_metalinter_autosave = 0
 let g:ale_linters = {
             \'go': ['golint', 'go vet', 'go build'],
             \'css': ['stylelint'],
+            \'typescript': ['tslint', 'tsserver'],
             \}
 
 

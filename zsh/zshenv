@@ -40,3 +40,6 @@ fi
 
 # dotfiles overrides
 export PATH="$DOTFILES/bin:$PATH"
+
+# pnpm
+NPM_CHECK_INSTALLER=pnpm

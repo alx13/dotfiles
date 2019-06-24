@@ -1,0 +1,107 @@
+{
+    "workbench.colorCustomizations": {
+        "terminal.ansiBlack": "#606060",
+        "terminal.ansiRed": "#d26562",
+        "terminal.ansiGreen": "#70bf9c",
+        "terminal.ansiYellow": "#f3e4bd",
+        "terminal.ansiBlue": "#165894",
+        "terminal.ansiMagenta": "#e4a1ce",
+        "terminal.ansiCyan": "#9cd8db",
+        "terminal.ansiWhite": "#e3e2d5",
+        "terminal.ansiBrightBlack": "#82a092",
+        "terminal.ansiBrightRed": "#e4b3b2",
+        "terminal.ansiBrightGreen": "#cecaaf",
+        "terminal.ansiBrightYellow": "#e6d7af",
+        "terminal.ansiBrightBlue": "#a4ccf6",
+        "terminal.ansiBrightMagenta": "#f1a8db",
+        "terminal.ansiBrightCyan": "#a2e5e9",
+        "terminal.ansiBrightWhite": "#ffffff",
+    },
+    "workbench.colorTheme": "Zenburn",
+    "editor.minimap.enabled": false,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.suggest.localityBonus": true,
+    "editor.suggestSelection": "recentlyUsed",
+    "vim.useSystemClipboard": true,
+    "vim.easymotion": true,
+    "vim.hlsearch": true,
+    "vim.leader": "\\",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "up"
+            ],
+            "commands": [
+                "workbench.action.splitEditorUp"
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "down"
+            ],
+            "commands": [
+                "workbench.action.splitEditorDown"
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "left"
+            ],
+            "commands": [
+                "workbench.action.splitEditorLeft"
+            ],
+        },
+        {
+            "before": [
+                "<leader>",
+                "s",
+                "right"
+            ],
+            "commands": [
+                "workbench.action.splitEditorRight"
+            ],
+        },
+    ],
+    "terminal.external.osxExec": "iTerm.app",
+    "editor.parameterHints.enabled": false,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "breadcrumbs.enabled": true,
+    "editor.renderControlCharacters": true,
+    "editor.tabSize": 2,
+    "editor.renderWhitespace": "boundary",
+    "vim.disableExtension": false,
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "tslint.ignoreDefinitionFiles": false,
+    "gitlens.advanced.telemetry.enabled": false,
+    "gitlens.blame.highlight.enabled": false,
+    "gitlens.codeLens.authors.enabled": false,
+    "breadcrumbs.symbolPath": "off",
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "atlascode.jira.workingSite": {
+        "baseUrlSuffix": "atlassian.net"
+    },
+    "yaml.schemas": {
+        "file:///Users/alx13/.vscode/extensions/atlassian.atlascode-1.4.2/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
+    "atlascode.jira.workingProject": {
+        "id": "10012",
+        "key": "NEW",
+        "name": "NewAlimero"
+    },
+    "atlascode.bitbucket.statusbar.enabled": false,
+    "atlascode.jira.statusbar.enabled": false,
+    "files.associations": {
+        "*.liquid.html": "liquid"
+    },
+    "gitlens.codeLens.enabled": false,
+    "gitlens.currentLine.enabled": false
+}

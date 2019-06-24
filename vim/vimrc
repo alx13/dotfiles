@@ -26,15 +26,15 @@ set clipboard=unnamed
 nnoremap <leader>u    :GundoToggle<CR>
 
 "Сплиты
-nnoremap <leader>sw<left>  :topleft  vnew<CR>
-nnoremap <leader>sw<right> :botright vnew<CR>
-nnoremap <leader>sw<up>    :topleft  new<CR>
-nnoremap <leader>sw<down>  :botright new<CR>
-
 nnoremap <leader>s<left>   :leftabove  vnew<CR>
 nnoremap <leader>s<right>  :rightbelow vnew<CR>
 nnoremap <leader>s<up>     :leftabove  new<CR>
 nnoremap <leader>s<down>   :rightbelow new<CR>
+
+nnoremap <leader><left>   <C-W>h
+nnoremap <leader><right>  <C-W>l
+nnoremap <leader><up>     <C-W>k
+nnoremap <leader><down>   <C-W>j
 
 
 "показываем команды
@@ -146,21 +146,20 @@ Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
-" Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
+Plug 'jason0x43/vim-js-indent', { 'for': ['typescript', 'javascript', 'javascript.jsx'] }
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript'] }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
-" Plug 'Quramy/vim-dtsm', { 'for': 'typescript' }
-
-" Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/yajs.vim', { 'for': ['javascript'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript.jsx'] }
 Plug 'kelan/gyp.vim', { 'for': ['gyp'] }
 Plug 'briancollins/vim-jst', { 'for': ['jst', 'ejs'] }
+Plug 'jparise/vim-graphql', { 'for': ['typescript', 'graphql'] }
 
 Plug 'b4b4r07/vim-hcl'
 
 Plug 'lifepillar/vim-cheat40'
 Plug 'lifepillar/pgsql.vim'
+Plug 'vim-scripts/dbext.vim'
 
 call plug#end()            " required
 
@@ -250,6 +249,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 noremap <silent> <leader>n :NERDTreeToggle<CR> <C-w>=
 noremap <silent> <leader>f :NERDTreeFind<CR> <C-w>=
 
+let g:omni_sql_no_default_maps = 1
+
 " Enable omni completion.
 set showmode
 set shortmess+=cI
@@ -267,7 +268,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType typescript set omnifunc=tsuquyomi#complete
-
 
 " inoremap <expr> <Tab> <plug>(MUcompleteCycFwd)
 " inoremap <expr><Tab>  pumvisible() ? "\<C-j>" : "\<Tab>"
@@ -293,6 +293,7 @@ let g:indentLine_faster = 1
 let g:indentLine_setConceal = 0
 
 " different indents
+let g:typescript_indent_disable = 1
 autocmd FileType typescript setlocal indentkeys+=0
 
 " typescript
@@ -320,7 +321,6 @@ let g:ale_linters = {
             \'css': ['stylelint'],
             \'typescript': ['tslint', 'tsserver'],
             \}
-
 
 "sort
 vnoremap <leader>s :sort<CR>

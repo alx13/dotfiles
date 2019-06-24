@@ -1,5 +1,5 @@
 [user]
-    name = alx13
+	name = Alex Ostapenko
     email = alex.alx13@gmail.com
 [alias]
     lg = log --color --branches --remotes --tags --decorate --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit

@@ -4,6 +4,13 @@
 set editing-mode vi
 bindkey -v
 
+# https://stackoverflow.com/questions/19981065/nodejs-error-emfile-too-many-open-files-on-mac-os/27982223#27982223
+# echo kern.maxfiles=65536 | sudo tee -a /etc/sysctl.conf
+# echo kern.maxfilesperproc=65536 | sudo tee -a /etc/sysctl.conf
+# sudo sysctl -w kern.maxfiles=65536
+# sudo sysctl -w kern.maxfilesperproc=65536
+ulimit -n 65536 65536
+
 # anaconda
 # if [ -d "$HOME/anaconda/bin" ]; then
 #     export PATH="$PATH:$HOME/anaconda/bin"

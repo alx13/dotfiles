@@ -15,58 +15,67 @@
         "terminal.ansiBrightBlue": "#a4ccf6",
         "terminal.ansiBrightMagenta": "#f1a8db",
         "terminal.ansiBrightCyan": "#a2e5e9",
-        "terminal.ansiBrightWhite": "#ffffff",
+        "terminal.ansiBrightWhite": "#ffffff"
     },
     "workbench.colorTheme": "Zenburn",
     "editor.minimap.enabled": false,
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.suggest.localityBonus": true,
     "editor.suggestSelection": "recentlyUsed",
+    "vim.disableExtension": false,
     "vim.useSystemClipboard": true,
     "vim.easymotion": true,
     "vim.hlsearch": true,
     "vim.leader": "\\",
+    "vim.overrideCopy": true,
+    "vim.visualstar": true,
+    "vim.highlightedyank.enable": true,
+    "vim.debug.silent": false,
+    "vim.debug.loggingLevelForConsole": "debug",
+    "vim.camelCaseMotion.enable": true,
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before":["<leader>", "s"],
+            "commands": ["editor.action.sortLinesAscending"]
+        },
+    ],
     "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "before": [
-                "<leader>",
-                "s",
-                "up"
-            ],
-            "commands": [
-                "workbench.action.splitEditorUp"
-            ],
+            "before":["<leader>", "<CR>"],
+            "commands": [":nohl"]
         },
         {
-            "before": [
-                "<leader>",
-                "s",
-                "down"
-            ],
-            "commands": [
-                "workbench.action.splitEditorDown"
-            ],
+            "before": ["<leader>", "s", "up"],
+            "commands": ["workbench.action.splitEditorUp"]
         },
         {
-            "before": [
-                "<leader>",
-                "s",
-                "left"
-            ],
-            "commands": [
-                "workbench.action.splitEditorLeft"
-            ],
+            "before": ["<leader>", "s", "down"],
+            "commands": ["workbench.action.splitEditorDown"]
         },
         {
-            "before": [
-                "<leader>",
-                "s",
-                "right"
-            ],
-            "commands": [
-                "workbench.action.splitEditorRight"
-            ],
+            "before": ["<leader>", "s", "left"],
+            "commands": ["workbench.action.splitEditorLeft"]
         },
+        {
+            "before": ["<leader>", "s", "right"],
+            "commands": ["workbench.action.splitEditorRight"]
+        },
+        {
+            "before": ["<leader>", "up"],
+            "commands": ["workbench.action.navigateUp"]
+        },
+        {
+            "before": ["<leader>", "down"],
+            "commands": ["workbench.action.navigateDown"]
+        },
+        {
+            "before": ["<leader>", "left"],
+            "commands": ["workbench.action.navigateLeft"]
+        },
+        {
+            "before": ["<leader>", "right"],
+            "commands": ["workbench.action.navigateRight"]
+        }
     ],
     "terminal.external.osxExec": "iTerm.app",
     "editor.parameterHints.enabled": false,
@@ -76,7 +85,6 @@
     "editor.renderControlCharacters": true,
     "editor.tabSize": 2,
     "editor.renderWhitespace": "boundary",
-    "vim.disableExtension": false,
     "typescript.updateImportsOnFileMove.enabled": "never",
     "tslint.ignoreDefinitionFiles": false,
     "gitlens.advanced.telemetry.enabled": false,
